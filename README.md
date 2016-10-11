@@ -5,7 +5,8 @@ Extended to provide examples of passing Java 8 Lambda and Method functions
 
 Compile Directory
 ```
-find . -name "*.java" -print | xargs javac -d out  -Xlint:unchecked
+mkdir -p out/
+find . -name "*.java" -print | xargs javac -d out/  -Xlint:unchecked
 ```
 
 Compile Dependancies of Specific File
