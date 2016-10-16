@@ -6,8 +6,8 @@ Extended to provide examples of passing Java 8 Lambda and Method functions
 Command Line Compile
 ```
 mkdir -p build/classes/
-find . -name "*.java" | xargs -t javac -d build/classes/ -Xlint:unchecked # Whole directory
-javac -sourcepath ./ src/com/company/LongLoop.java -d build/classes/      # Dependencies of Specific File
+find ./src/ -name "*.java" | xargs -t javac -d build/classes/ -Xlint:unchecked      # Whole directory
+javac -sourcepath ./src/ src/main/java/com/company/LongLoop.java -d build/classes/  # Dependencies of Specific File
 java -cp build/classes/ com.company.LongLoop
 ```
 
