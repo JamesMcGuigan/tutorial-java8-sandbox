@@ -4,6 +4,7 @@
         <pathelement location="build/classes"/>
         <pathelement location="lib/junit-4.12.jar"/>
         <pathelement location="lib/ant-junit-1.8.4.jar"/>
+        <pathelement location="lib/mockito-all-1.10.19.jar"/>
     </path>
 
     <target name="clean">
