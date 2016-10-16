@@ -3,29 +3,28 @@ Code example from Effective Java: Chapter 2.5 Creating Unnecessary Objects (Long
 Extended to provide examples of passing Java 8 Lambda and Method functions
 
 
-Compile Directory
+Command Line Compile
 ```
-mkdir -p out/
-find . -name "*.java" -print | xargs javac -d out/  -Xlint:unchecked
-```
-
-Compile Dependencies of Specific File
-```
-javac -sourcepath . src/com/company/LongLoop.java -d out/
-```
-
-Run: 
-```
-java -cp out/ com.company.LongLoop
+mkdir -p build/classes/
+find . -name "*.java" | xargs -t javac -d build/classes/ -Xlint:unchecked # Whole directory
+javac -sourcepath ./ src/com/company/LongLoop.java -d build/classes/      # Dependencies of Specific File
+java -cp build/classes/ com.company.LongLoop
 ```
 
 
 JAR build
 ```
-echo Main-Class: com.company.LongLoop > LongLoop.manifest
-mkdir -p out/jar
-jar cfm   out/jar/LongLoop.jar LongLoop.manifest -C out/ .
-java -jar out/jar/LongLoop.jar
+echo Main-Class: com.company.LongLoop > ./LongLoop.manifest
+mkdir -p  build/jar/
+jar cfm   build/jar/LongLoop.jar ./LongLoop.manifest -C build/classes/ .
+java -jar build/jar/LongLoop.jar
+```
+
+
+Ant Build (default file is build.xml)            
+```
+ant -f LongLoop.xml clean
+ant -f LongLoop.xml compile jar run
 ```
 
 
