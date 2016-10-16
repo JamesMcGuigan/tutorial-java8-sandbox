@@ -1,7 +1,8 @@
-Code example from Effective Java: Chapter 2.5 Creating Unnecessary Objects (Long vs long) 
+LongLoop code example from Effective Java: Chapter 2.5 Creating Unnecessary Objects (Long vs long) 
 
 Extended to provide examples of passing Java 8 Lambda and Method functions
 
+# Build
 
 Command Line Compile
 ```
@@ -21,10 +22,21 @@ java -jar build/jar/LongLoop.jar
 ```
 
 
-Ant Build (default file is build.xml)            
+Ant Build (default file is build.xml)
+- https://ant.apache.org/manual/tutorial-HelloWorldWithAnt.html
 ```
 ant -f LongLoop.xml clean
 ant -f LongLoop.xml compile jar run
+```
+
+
+Maven Build (pom.xml)
+- https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
+```
+mvn package
+mvn package exec:java 
+mvn exec:java -Dexec.mainClass="com.company.LongLoop"
+java -jar target/LongLoop-1.0-SNAPSHOT.jar 
 ```
 
 
