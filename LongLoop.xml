@@ -1,12 +1,24 @@
 <project>
 
+    <path id="classpath">
+        <pathelement location="build/classes"/>
+        <pathelement location="lib/junit-4.12.jar"/>
+        <pathelement location="lib/ant-junit-1.8.4.jar"/>
+    </path>
+
     <target name="clean">
         <delete dir="build"/>
     </target>
 
     <target name="compile">
         <mkdir dir="build/classes"/>
-        <javac srcdir="src/main/java" destdir="build/classes"/>
+
+        <javac srcdir="src/main/java" destdir="build/classes" includeantruntime="false">
+            <classpath refid="classpath"/>
+        </javac>
+        <javac srcdir="src/test/java" destdir="build/classes" includeantruntime="false">
+            <classpath refid="classpath"/>
+        </javac>
     </target>
 
     <target name="jar">
@@ -20,6 +32,21 @@
 
     <target name="run">
         <java jar="build/jar/LongLoop.jar" fork="true"/>
+    </target>
+
+    <target name="test" depends="compile">
+        <junit printsummary="yes" fork="yes" haltonfailure="yes">
+            <classpath refid="classpath"/>
+
+            <formatter type="plain" usefile="false" /> <!-- to screen -->
+
+            <batchtest>
+                <fileset dir="src/test/java">
+                    <include name="**/*Test*" />
+                </fileset>
+            </batchtest>
+
+        </junit>
     </target>
 
 </project>
