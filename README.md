@@ -9,7 +9,7 @@ mkdir -p out/
 find . -name "*.java" -print | xargs javac -d out/  -Xlint:unchecked
 ```
 
-Compile Dependancies of Specific File
+Compile Dependencies of Specific File
 ```
 javac -sourcepath . src/com/company/LongLoop.java -d out/
 ```
@@ -18,6 +18,16 @@ Run:
 ```
 java -cp out/ com.company.LongLoop
 ```
+
+
+JAR build
+```
+echo Main-Class: com.company.LongLoop > LongLoop.manifest
+mkdir -p out/jar
+jar cfm   out/jar/LongLoop.jar LongLoop.manifest -C out/ .
+java -jar out/jar/LongLoop.jar
+```
+
 
 Output
 ```
