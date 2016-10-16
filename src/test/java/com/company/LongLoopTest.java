@@ -11,6 +11,16 @@ public class LongLoopTest extends TestCase {
         looper = spy(new LongLoop());
     }
 
+    public void testTimer() {
+        looper.timer(looper::littleLong);
+        looper.timer(looper::voidLittleLong);
+
+        verify(looper, times(1)).voidLittleLong();
+        verify(looper, times(2)).littleLong();
+        verify(looper, times(0)).voidBigLong();
+        verify(looper, times(0)).bigLong();
+    }
+
     public void testVoidLittleLong() {
         looper.voidLittleLong();
 
