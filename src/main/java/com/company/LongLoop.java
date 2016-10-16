@@ -9,18 +9,28 @@ import java.util.function.Supplier;
 
 public class LongLoop {
     public static void main(String[] args) {
-        new LongLoop();
+        LongLoop looper = new LongLoop();
+        looper.run();
     }
 
     public LongLoop() {
-        this.bigLong();
+    }
+
+    public void run() {
         this.littleLong();
+        this.bigLong();
 
-        this.timer(() -> this.bigLong());
         this.timer(() -> this.littleLong());
+        this.timer(() -> this.bigLong());
 
-        this.timer(this::bigLong);
+        this.timer(() -> this.voidLittleLong());
+        this.timer(() -> this.voidBigLong());
+
         this.timer(this::littleLong);
+        this.timer(this::bigLong);
+
+        this.timer(this::voidLittleLong);
+        this.timer(this::voidBigLong);
     }
 
     // For: void littleLong()
@@ -44,7 +54,11 @@ public class LongLoop {
     }
 
 
-    public void littleLong() {
+    public void voidLittleLong() {
+        littleLong();
+        return;
+    }
+    public long littleLong() {
         Instant start = Instant.now();
 
         long sum = 0L;
@@ -56,7 +70,12 @@ public class LongLoop {
         Instant end = Instant.now();
         System.out.println(Duration.between(start, end).toMillis() + " ms");
 
-        // return sum;
+        return sum;
+    }
+
+    public void voidBigLong() {
+        bigLong();
+        return;
     }
     public Long bigLong() {
         Instant start = Instant.now();
