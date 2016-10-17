@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.company.Main</groupId>
-    <artifactId>LongLoop</artifactId>
+    <artifactId>JavaSandbox</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>LongLoop Sandbox</name>
+    <name>Java Sandbox</name>
     <url>http://maven.apache.org</url>
 
     <build>

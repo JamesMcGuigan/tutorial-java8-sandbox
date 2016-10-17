@@ -25,7 +25,7 @@
 
     <target name="jar">
         <mkdir dir="build/jar"/>
-        <jar destfile="build/jar/LongLoop.jar" basedir="build/classes">
+        <jar destfile="build/jar/JavaSandbox.jar" basedir="build/classes">
             <manifest>
                 <attribute name="Main-Class" value="com.company.Main"/>
             </manifest>
@@ -33,7 +33,7 @@
     </target>
 
     <target name="run">
-        <java jar="build/jar/LongLoop.jar" fork="true"/>
+        <java jar="build/jar/JavaSandbox.jar" fork="true"/>
     </target>
 
     <target name="test" depends="compile">
