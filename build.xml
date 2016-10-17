@@ -26,7 +26,7 @@
         <mkdir dir="build/jar"/>
         <jar destfile="build/jar/LongLoop.jar" basedir="build/classes">
             <manifest>
-                <attribute name="Main-Class" value="com.company.LongLoop"/>
+                <attribute name="Main-Class" value="com.company.Main"/>
             </manifest>
         </jar>
     </target>

@@ -8,11 +8,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class LongLoop {
-    public static void main(String[] args) {
-        LongLoop looper = new LongLoop();
-        looper.run();
-    }
-
     public LongLoop() {
     }
 

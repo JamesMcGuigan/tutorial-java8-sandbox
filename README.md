@@ -7,17 +7,17 @@ Extended to provide examples of passing Java 8 Lambda and Method functions
 Command Line Compile
 ```
 mkdir -p build/classes/
-find ./src/ -name "*.java" | xargs -t javac -d build/classes/ -Xlint:unchecked      # Whole directory
-javac -sourcepath ./src/ src/main/java/com/company/LongLoop.java -d build/classes/  # Dependencies of Specific File
-java -cp build/classes/ com.company.LongLoop
+find ./src/ -name "*.java" | xargs -t javac -d build/classes/ -Xlint:unchecked  # Whole directory
+javac -sourcepath ./src/ src/main/java/com/company/Main.java -d build/classes/  # Dependencies of Specific File
+java -cp build/classes/ com.company.Main
 ```
 
 
 JAR build
 ```
-echo Main-Class: com.company.LongLoop > ./LongLoop.manifest
+echo Main-Class: com.company.Main > ./jarfile.manifest
 mkdir -p  build/jar/
-jar cfm   build/jar/LongLoop.jar ./LongLoop.manifest -C build/classes/ .
+jar cfm   build/jar/LongLoop.jar ./jarfile.manifest -C build/classes/ .
 java -jar build/jar/LongLoop.jar
 ```
 
@@ -25,17 +25,16 @@ java -jar build/jar/LongLoop.jar
 Ant Build (default file is build.xml)
 - https://ant.apache.org/manual/tutorial-HelloWorldWithAnt.html
 ```
-ant -f LongLoop.xml clean
-ant -f LongLoop.xml compile jar run
+ant -f build.xml clean
+ant compile jar 
+ant run
 ```
 
 
 Maven Build (pom.xml)
 - https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html
 ```
-mvn package
 mvn package exec:java 
-mvn exec:java -Dexec.mainClass="com.company.LongLoop"
 java -jar target/LongLoop-1.0-SNAPSHOT.jar 
 ```
 
