@@ -4,8 +4,9 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * TODO:
@@ -14,19 +15,30 @@ import java.util.List;
  * - Threads and ThreadPool
  */
 public class FileReader {
-    protected String filepath = "src/main/resources/Frank Herbert - Dune.txt";
+    protected static String filepath = "src/main/resources/Frank Herbert - Dune.txt";
+
+    /**
+     * main() for debugging and testing purposes
+     * @param args
+     */
+    public static void main(String[] args) {
+        FileReader fileReader = new FileReader();
+        LongLoop.timer(() -> fileReader.nioTreeMap(FileReader.filepath));
+    }
 
     public FileReader() {
     }
 
     public void run() {
-        LongLoop.timer(() -> ioFileInputStream(filepath));
-        LongLoop.timer(() -> nioBufferedReader(filepath));
-        LongLoop.timer(() -> nioFilesReadAllBytes(filepath));
+        LongLoop.timer(() -> ioFileInputStream(FileReader.filepath));
+        LongLoop.timer(() -> nioBufferedReader(FileReader.filepath));
+        LongLoop.timer(() -> nioFilesReadAllBytes(FileReader.filepath));
+        LongLoop.timer(() -> nioTreeMap(FileReader.filepath));
 
-        LongLoop.timer(() -> ioFileInputStream(filepath));
-        LongLoop.timer(() -> nioBufferedReader(filepath));
-        LongLoop.timer(() -> nioFilesReadAllBytes(filepath));
+        LongLoop.timer(() -> ioFileInputStream(FileReader.filepath));
+        LongLoop.timer(() -> nioBufferedReader(FileReader.filepath));
+        LongLoop.timer(() -> nioFilesReadAllBytes(FileReader.filepath));
+        LongLoop.timer(() -> nioTreeMap(FileReader.filepath));
     }
 
     /**
@@ -104,6 +116,52 @@ public class FileReader {
 
         System.out.println("nioFilesReadAllBytes() - content.length(): " + content.length());
         return content;
+    }
+
+    /**
+     * Returns file contents sorted by reverse line length, using TreeMap and Java 8 Streams
+     * @param filepath
+     * @return
+     */
+    public String nioTreeMap(String filepath) {
+        try {
+            List<String> lines = Files.readAllLines(Paths.get(filepath), StandardCharsets.UTF_8);
+            SortedMap<Integer, List<String>> linesByLength = new TreeMap<>((i1, i2) -> i2.compareTo(i1)); // shortest lines first
+
+            for( String line : lines ) {
+                int key = line.length();
+                List<String> value = linesByLength.getOrDefault(key, new ArrayList<String>());
+                value.add(line);
+                linesByLength.put(key, value);
+            }
+
+            Integer averageLineLength = linesByLength
+                    .entrySet()
+                    .stream()
+                    .map( (entry) -> (Integer) (entry.getKey() * entry.getValue().size()) )
+                    .collect(Collectors.summingInt(Integer::intValue))
+                    / lines.size()
+            ;
+
+            String content = linesByLength
+                    .values()
+                    .stream()
+                    .flatMap(List::stream)
+                    //.collect(Collectors.toList());   // flatten to List<String>
+                    .collect(Collectors.joining("\n")) // flatten to String.join()
+            ;
+
+            System.out.println("nioTreeMap() - totalLines: " + lines.size());
+            System.out.println("nioTreeMap() - averageLineLength: " + averageLineLength);
+            System.out.println("nioTreeMap() - longestLineLength: " + linesByLength.firstKey());
+
+            return content;
+
+        } catch (IOException exception) {
+            System.out.println("nioTreeMap() - IOException: " + exception.toString());
+        }
+
+        return "";
     }
 
 }
