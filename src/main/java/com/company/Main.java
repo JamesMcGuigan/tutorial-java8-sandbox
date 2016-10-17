@@ -4,7 +4,10 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("public static void main(String[] args)");
 
-        //LongLoop looper = new LongLoop();
-        //looper.run();
+        FileReader fileReader = new FileReader();
+        fileReader.run();
+
+        LongLoop looper = new LongLoop();
+        looper.run();
     }
 }

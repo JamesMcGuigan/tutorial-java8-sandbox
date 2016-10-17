@@ -12,8 +12,8 @@ public class LongLoopTest extends TestCase {
     }
 
     public void testTimer() {
-        looper.timer(looper::littleLong);
-        looper.timer(looper::voidLittleLong);
+        LongLoop.timer(looper::littleLong);
+        LongLoop.timer(looper::voidLittleLong);
 
         verify(looper, times(1)).voidLittleLong();
         verify(looper, times(2)).littleLong();

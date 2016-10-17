@@ -1,6 +1,22 @@
-LongLoop code example from Effective Java: Chapter 2.5 Creating Unnecessary Objects (Long vs long) 
+ 
+# Classes
+
+## com.company.Main
+
+This is the main method, referenced in [jarfile.manifest]() [build.xml]() and [pom.xml]()
+
+Its calls the .run() methods of all the other classes
+
+## com.company.LongLoop
+
+Code example from Effective Java: Chapter 2.5 Creating Unnecessary Objects (Long vs long)
 
 Extended to provide examples of passing Java 8 Lambda and Method functions
+
+## com.company.FileReader
+
+Multiple different examples of how to read a text file
+
 
 # Build
 

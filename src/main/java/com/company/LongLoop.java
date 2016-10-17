@@ -15,21 +15,21 @@ public class LongLoop {
         this.littleLong();
         this.bigLong();
 
-        this.timer(() -> this.littleLong());
-        this.timer(() -> this.bigLong());
+        LongLoop.timer(() -> this.littleLong());
+        LongLoop.timer(() -> this.bigLong());
 
-        this.timer(() -> this.voidLittleLong());
-        this.timer(() -> this.voidBigLong());
+        LongLoop.timer(() -> this.voidLittleLong());
+        LongLoop.timer(() -> this.voidBigLong());
 
-        this.timer(this::littleLong);
-        this.timer(this::bigLong);
+        LongLoop.timer(this::littleLong);
+        LongLoop.timer(this::bigLong);
 
-        this.timer(this::voidLittleLong);
-        this.timer(this::voidBigLong);
+        LongLoop.timer(this::voidLittleLong);
+        LongLoop.timer(this::voidBigLong);
     }
 
     // For: void littleLong()
-    public void timer(Runnable func) {
+    public static void timer(Runnable func) {
         Instant start = Instant.now();
 
         func.run();
@@ -39,7 +39,7 @@ public class LongLoop {
     }
 
     // For: void bigLong()
-    public void timer(Supplier<Long> func) {
+    public static void timer(Supplier<Long> func) {
         Instant start = Instant.now();
 
         func.get();
