@@ -20,7 +20,9 @@ public class MultiThreadFileReaderTest extends TestCase {
         List<String> fileContents = new ArrayList<>();
         fileContents.add(fileReader.nioFilesReadAllBytes(fileReader.filepath));
         fileContents.add(multiThreadFileReader.simpleThreadRead());
+        fileContents.add(multiThreadFileReader.executorThreadRead());
 
         assertEquals(fileContents.get(0), fileContents.get(1));
+        assertEquals(fileContents.get(0), fileContents.get(2));
     }
 }

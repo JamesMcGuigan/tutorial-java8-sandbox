@@ -24,21 +24,23 @@ public class MultiThreadFileReader {
 
     public static void main(String[] args) {
         MultiThreadFileReader multiThreadFileReader = new MultiThreadFileReader();
-        multiThreadFileReader.simpleThreadRead();
+        //multiThreadFileReader.simpleThreadRead();
+        multiThreadFileReader.executorThreadRead();
     }
 
     public MultiThreadFileReader() {
+    }
+    public String simpleThreadRead() {
         try {
             reader  = Files.newBufferedReader(Paths.get(MultiThreadFileReader.filepath), StandardCharsets.UTF_8);
-            content = new StringBuffer();
-            threads = new ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    public String simpleThreadRead() {
+        content = new StringBuffer();
+        threads = new ArrayList<>();
+
         for( int i = 0; i < maxThreads; i++ ) {
-            Thread thread = new ThreadReader(i);
+            Thread thread = new ThreadReader(i, reader, content);
             threads.add(thread);
         }
         for( Thread thread : threads ) {
@@ -54,12 +56,37 @@ public class MultiThreadFileReader {
         return content.toString();
     }
 
+    public String executorThreadRead() {
+        try {
+            reader  = Files.newBufferedReader(Paths.get(MultiThreadFileReader.filepath), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        content = new StringBuffer();
+
+        executorService = Executors.newFixedThreadPool(maxThreads);
+        for( int i = 0; i < maxThreads; i++ ) {
+            executorService.execute(new ThreadReader(i, reader, content));
+        }
+        executorService.shutdown();
+        try {
+            executorService.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return content.toString();
+    }
+
     private class ThreadReader extends Thread {
         private String line;
         public final int threadNumber;
+        public BufferedReader reader;
+        public StringBuffer   content;
 
-        public ThreadReader(int threadNumber) {
+        public ThreadReader(int threadNumber, BufferedReader reader, StringBuffer content) {
             this.threadNumber = threadNumber;
+            this.reader = reader;
+            this.content = content;
         }
 
         @Override
