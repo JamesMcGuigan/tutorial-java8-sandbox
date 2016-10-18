@@ -88,7 +88,7 @@ public class FileReader {
             String line;
             while( (line = reader.readLine()) != null ) {
                 //System.out.println(line);
-                lines.append(line);
+                lines.append(line+"\n");
                 lineCount++;
             }
         } catch (IOException exception) {
@@ -163,5 +163,4 @@ public class FileReader {
 
         return "";
     }
-
 }

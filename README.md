@@ -17,6 +17,9 @@ Extended to provide examples of passing Java 8 Lambda and Method functions
 
 Multiple different examples of how to read a text file
 
+## com.company.MultiThreadFileReader
+
+Example of multithreaded file reading
 
 # Build
 

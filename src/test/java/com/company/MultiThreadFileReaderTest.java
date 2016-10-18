@@ -7,20 +7,20 @@ import java.util.List;
 
 import static org.mockito.Mockito.spy;
 
-public class FileReaderTest extends TestCase {
+public class MultiThreadFileReaderTest extends TestCase {
     protected FileReader fileReader;
+    protected MultiThreadFileReader multiThreadFileReader;
 
-    protected void setUp(){
+    protected void setUp() {
         fileReader = spy(new FileReader());
+        multiThreadFileReader = spy(new MultiThreadFileReader());
+
     }
     public void testFileContentsSame() {
         List<String> fileContents = new ArrayList<>();
-        fileContents.add(fileReader.ioFileInputStream(fileReader.filepath));
         fileContents.add(fileReader.nioFilesReadAllBytes(fileReader.filepath));
-        fileContents.add(fileReader.nioBufferedReader(fileReader.filepath));
+        fileContents.add(multiThreadFileReader.simpleThreadRead());
 
-        assertEquals(fileContents.get(0), fileContents.get(0));
-        assertEquals(fileContents.get(1), fileContents.get(0));
-        assertEquals(fileContents.get(2), fileContents.get(1));
+        assertEquals(fileContents.get(0), fileContents.get(1));
     }
 }
